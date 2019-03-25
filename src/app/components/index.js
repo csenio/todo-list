@@ -1,4 +1,5 @@
 import Button from "./Button";
-import Chart from "./Chart/Chart.js";
+import Chart from "./Chart";
+import Checkbox from "./Checkbox";
 
-export { Button, Chart };
+export { Button, Chart, Checkbox };

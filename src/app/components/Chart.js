@@ -1,8 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CircularProgressbar from "react-circular-progressbar";
-import { ChartContainer } from "./styles";
 import "react-circular-progressbar/dist/styles.css";
+
+import styled from "styled-components";
+
+export const ChartContainer = styled.div`
+  height: 80px;
+  width: 80px;
+`;
 
 function Chart({ percentage, theme }) {
   return (
@@ -27,8 +33,7 @@ function Chart({ percentage, theme }) {
 }
 
 Chart.propTypes = {
-  percentage: PropTypes.number.isRequired,
-  theme: PropTypes.array.isRequired
+  percentage: PropTypes.number.isRequired
 };
 
 Chart.defaultProps = {
