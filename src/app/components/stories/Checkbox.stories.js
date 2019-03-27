@@ -18,12 +18,5 @@ export default storiesOf("Checkbox", module)
       <Checkbox />
     </div>
   ))
-  .add("force Checked", () => <Checkbox forceChecked />)
-  .add("initiallz Checked", () => <Checkbox checked />)
-  .add("onCheck", () => (
-    <Checkbox
-      onChange={action("value")}
-      onCheck={action("checked")}
-      onUncheck={action("uncheck")}
-    />
-  ));
+  .add("initially Checked", () => <Checkbox checked />)
+  .add("onCheck", () => <Checkbox onChange={action("value")} />);

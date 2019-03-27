@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
@@ -11,6 +11,7 @@ const CheckboxOutline = styled(animated.span)`
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
+  margin-right: 6px;
 `;
 
 const CheckboxInner = styled.span`
@@ -22,8 +23,8 @@ const CheckboxInner = styled.span`
   margin: 2px;
 `;
 
-const Checkbox = ({ onCheck, onUncheck, onChange, checked, forceChecked }) => {
-  const [active, setActive] = useState(forceChecked || checked || false);
+const Checkbox = ({ onChange, checked }) => {
+  const [active, setActive] = useState(checked);
   const [{ scale }, setScale] = useSpring(() => ({
     scale: 1,
     config: { mass: 1, tension: 400, friction: 14 }
@@ -31,15 +32,8 @@ const Checkbox = ({ onCheck, onUncheck, onChange, checked, forceChecked }) => {
 
   const onMouseDown = e => {
     e.preventDefault();
-    if (!forceChecked) {
-      onChange(!active);
-      if (!active) {
-        onCheck();
-      } else {
-        onUncheck();
-      }
-      setActive(!active);
-    }
+    onChange(!active);
+    setActive(!active);
     setScale({ scale: 0.92 });
   };
 
@@ -66,18 +60,11 @@ const Checkbox = ({ onCheck, onUncheck, onChange, checked, forceChecked }) => {
 
 Checkbox.propTypes = {
   checked: PropTypes.bool, //initial state
-  forceChecked: PropTypes.bool, //force state
-  onCheck: PropTypes.func,
-  onUncheck: PropTypes.func,
-  onUncheck: PropTypes.func,
   onChange: PropTypes.func
 };
 
 Checkbox.defaultProps = {
   checked: false,
-  forceChecked: false,
-  onCheck: () => {},
-  onUncheck: () => {},
   onChange: () => {}
 };
 
