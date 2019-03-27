@@ -2,10 +2,9 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { Checkbox } from "..";
-import { theme } from "../../theme";
 
 export default storiesOf("Checkbox", module)
-  .add("default", () => <Checkbox theme={theme} onClick={action("clicked")} />)
+  .add("default", () => <Checkbox />)
   .add("centered", () => (
     <div
       style={{
@@ -16,6 +15,15 @@ export default storiesOf("Checkbox", module)
         justifyContent: "center"
       }}
     >
-      <Checkbox theme={theme} onClick={action("clicked")} />
+      <Checkbox />
     </div>
+  ))
+  .add("force Checked", () => <Checkbox forceChecked />)
+  .add("initiallz Checked", () => <Checkbox checked />)
+  .add("onCheck", () => (
+    <Checkbox
+      onChange={action("value")}
+      onCheck={action("checked")}
+      onUncheck={action("uncheck")}
+    />
   ));

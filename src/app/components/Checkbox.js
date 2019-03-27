@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import { useSpring, animated } from "react-spring";
@@ -6,7 +6,7 @@ import { useSpring, animated } from "react-spring";
 const CheckboxOutline = styled(animated.span)`
   height: 24px;
   width: 24px;
-  border: 3px solid #21d19f;
+  border: 3px solid ${props => props.theme.accentPrimary};
   display: inline-block;
   border-radius: 4px;
   box-sizing: border-box;
@@ -14,44 +14,71 @@ const CheckboxOutline = styled(animated.span)`
 `;
 
 const CheckboxInner = styled.span`
-  height: 15px;
-  width: 15px;
-  background: #45b69c;
+  height: 14px;
+  width: 14px;
+  background: ${props => props.theme.accentSecondary};
   display: inline-block;
   border-radius: 2px;
-  margin: 1.5px;
+  margin: 2px;
 `;
 
-function Checkbox(props) {
-  const [active, setActive] = useState(false);
-  const { x } = useSpring({
-    x: active ? 1 : 0,
-    config: { duration: 500 }
-  });
+const Checkbox = ({ onCheck, onUncheck, onChange, checked, forceChecked }) => {
+  const [active, setActive] = useState(forceChecked || checked || false);
+  const [{ scale }, setScale] = useSpring(() => ({
+    scale: 1,
+    config: { mass: 1, tension: 400, friction: 14 }
+  }));
 
-  const onClick = () => {
-    setActive(!active);
+  const onMouseDown = e => {
+    e.preventDefault();
+    if (!forceChecked) {
+      onChange(!active);
+      if (!active) {
+        onCheck();
+      } else {
+        onUncheck();
+      }
+      setActive(!active);
+    }
+    setScale({ scale: 0.92 });
+  };
+
+  const onMouseUp = e => {
+    e.preventDefault();
+    setScale({ scale: 1 });
   };
 
   return (
     <CheckboxOutline
       style={{
-        transform: x
-          .interpolate({
-            range: [0, 0.2, 0.8, 1],
-            output: [1, 0.97, 1.1, 1]
-          })
-          .interpolate(x => `scale(${x})`)
+        transform: scale.interpolate(scale => `scale(${scale})`)
       }}
-      onClick={onClick}
+      onMouseDown={onMouseDown}
+      onTouchStart={onMouseDown}
+      onMouseUp={onMouseUp}
+      onTouchEnd={onMouseUp}
+      onMouseLeave={onMouseUp}
     >
       {active && <CheckboxInner />}
     </CheckboxOutline>
   );
-}
+};
 
 Checkbox.propTypes = {
-  checked: PropTypes.bool.isRequired
+  checked: PropTypes.bool, //initial state
+  forceChecked: PropTypes.bool, //force state
+  onCheck: PropTypes.func,
+  onUncheck: PropTypes.func,
+  onUncheck: PropTypes.func,
+  onChange: PropTypes.func
+};
+
+Checkbox.defaultProps = {
+  checked: false,
+  forceChecked: false,
+  onCheck: () => {},
+  onUncheck: () => {},
+  onChange: () => {}
 };
 
 export default Checkbox;
