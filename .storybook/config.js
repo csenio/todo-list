@@ -13,7 +13,8 @@ const theme = {
   accentSecondary: "#45B69C",
   accentNeutral: "#FFFFFF",
   accentLight: "#D8DDEF",
-  background: "#FFFFFF"
+  background: "#FFFFFF",
+  warning: "#FF6363"
 };
 
 addDecorator(story => <ThemeProvider theme={theme}>{story()}</ThemeProvider>);

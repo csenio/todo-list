@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Home } from "./pages";
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import { themeLight } from "./theme";
+import { theme } from "./theme";
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -13,7 +13,7 @@ const GlobalStyles = createGlobalStyle`
 class App extends Component {
   render() {
     return (
-      <ThemeProvider theme={themeLight}>
+      <ThemeProvider theme={theme}>
         <GlobalStyles />
         <div className="App">
           <Home />

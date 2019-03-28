@@ -7,6 +7,11 @@ export default storiesOf("ListItem", module)
   .add("default", () => (
     <ListItem onChange={action("onChange")}>Lorem Ipsum</ListItem>
   ))
+  .add("remove item", () => (
+    <ListItem onChange={action("onChange")} removeItem={action("removeItem")}>
+      Lorem Ipsum
+    </ListItem>
+  ))
   .add("input", () => (
     <ListItem input onChange={action("onChange")}>
       Lorem Ipsum
